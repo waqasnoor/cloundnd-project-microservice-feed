@@ -1,0 +1,32 @@
+language: node_js
+node_js:
+  - 12
+
+services:
+  - docker
+
+branches:
+  only:
+    - master
+
+  #Pre-testing installs
+install:
+  - npm install
+  - npm run build
+
+#script to be run such as tests
+
+before_script:
+  - echo "no tests"
+
+script:
+  - docker --version #print docker version
+  - docker build -t user-api .
+  - docker tag user-api waqasnoor/user-api:latest
+  - docker tag user-api waqasnoor/user-api:"$TRAVIS_BUILD_NUMBER"
+
+# Tasks to perform after image
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push waqasnoor/user-api:"$TRAVIS_BUILD_NUMBER"
+  - docker push waqasnoor/user-api:latest
