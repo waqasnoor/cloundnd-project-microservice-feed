@@ -21,12 +21,12 @@ before_script:
 
 script:
   - docker --version #print docker version
-  - docker build -t user-api .
-  - docker tag user-api waqasnoor/user-api:latest
-  - docker tag user-api waqasnoor/user-api:"$TRAVIS_BUILD_NUMBER"
+  - docker build -t feed-api .
+  - docker tag feed-api waqasnoor/feed-api:latest
+  - docker tag feed-api waqasnoor/feed-api:"$TRAVIS_BUILD_NUMBER"
 
 # Tasks to perform after image
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push waqasnoor/user-api:"$TRAVIS_BUILD_NUMBER"
-  - docker push waqasnoor/user-api:latest
+  - docker push waqasnoor/feed-api:"$TRAVIS_BUILD_NUMBER"
+  - docker push waqasnoor/feed-api:latest
