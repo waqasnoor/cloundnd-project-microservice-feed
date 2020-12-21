@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-api
+  labels:
+    app: feed-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: feed-api-app
+  template:
+    metadata:
+      labels:
+        app: feed-api-app
+    spec:
+      containers:
+        - name: feed-api
+          image: waqasnoor/feed-api:latest
+          env:
+            - name: POSTGRES_USERNAME
+              value: cloudndudagram
+            - name: POSTGRES_PASSWORD
+              value: aC8HxWXjJNw9to8qXkKQ
+            - name: POSTGRES_DB
+              value: cloudnd-microservices
+            - name: POSTGRES_HOST
+              value: cloudnd-microservices.ctrkzosixhsg.us-east-2.rds.amazonaws.com
+            - name: DIALECT
+              value: postgres
+            - name: AWS_REGION
+              value: us-east-2
+            - name: AWS_PROFILE
+              value: default
+            - name: AWS_BUCKET
+              value: udagram-cloudnd-dev
+            - name: URL
+              value: all
+            - name: JWT_SECRET
+              value: )^Fk?vvGVMNE^h/
+            - name: AWS_ACCESS_KEY_ID
+              value: AKIA5LBGRGCV275LCPRU
+            - name: AWS_SECRET_KEY_ID
+              value: xPdpvc+YrmusL9ayN/ZPnIAc7ySrnt0hdk0oqIwK
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3

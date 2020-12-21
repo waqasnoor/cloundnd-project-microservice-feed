@@ -11,7 +11,8 @@
     "clean": "rm -rf www/ || true",
     "build": "npm run clean && tsc && cp -rf src/config www/config && cp .npmrc www/.npmrc && cp package.json www/package.json && cd www && zip -r Archive.zip . && cd ..",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "docker": "npm run build && docker build ."
+    "docker": "npm run build && docker build -t waqasnoor/feed-api:latest .",
+    "docker-run": "docker run -p 3002:3002 -d --env-file .env waqasnoor/feed-api:latest"
   },
   "keywords": [],
   "author": "Gabriel Ruttner",
